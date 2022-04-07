@@ -1,0 +1,8 @@
+node_modules/
+target/
+vscode/
+.idea/
+out/
+*.mv.db
+*.trace.db
+*.iml

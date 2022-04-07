@@ -1,0 +1,45 @@
+
+application {
+  config {
+    baseName cafeteros
+    applicationType monolith
+    packageName com.aconcaguasf.cafeteros
+    serverPort 8080
+    databaseType sql
+    enableHibernateCache true
+    enableTranslation false
+    authenticationType jwt
+    prodDatabaseType postgresql
+    devDatabaseType h2Disk
+    buildTool maven
+    cacheProvider no
+  }
+  entities *
+}
+
+entity Inventory {
+   id UUID
+   nameAudit String required unique minlength(1) maxlength(200)
+   auditStatus  AuditStatus
+   startDate ZonedDateTime
+}
+
+entity Ente {
+   id UUID
+   name String required unique minlength(1) maxlength(200)
+   activated Boolean required
+}
+
+
+enum AuditStatus {
+    PROCESO, FINALIZADA
+}
+
+relationship ManyToOne {
+	Inventory { Ente(name) required } to Ente
+}
+
+
+paginate Inventory , Ente with pagination
+dto * with mapstruct
+service all with serviceImpl
